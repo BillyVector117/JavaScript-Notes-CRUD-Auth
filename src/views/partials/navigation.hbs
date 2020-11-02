@@ -1,0 +1,44 @@
+{{!-- Estructura HTML barra de navegación que se llama desde el archivo main ( contiene validación para los usuarios registrados y no registrados ) --}}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container p-3">
+        <a class="navbar-brand" href="/">My notes application</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            </ul>
+            <ul class="navbar-nav ml-auto"> {{!-- Recorre elemento a la derecha del nav --}}
+            {{!-- Validar direcciones del navbar para usuarios registrados y no registrados --}}
+            {{#if user}} {{!-- Si existe un user (registrado), muestra esta estructura en el nav ( dropdown ) --}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Notes
+                </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/notes">My notes</a>
+            <a class="dropdown-item" href="/notes/add">Add new Note</a>
+            <a class="dropdown-item" href="/users/logout">Log out</a>
+            </div>
+        </li>  
+            {{else}} {{!-- Si no existe el usuario ( no se ha registrado ), muestra solo estas opciones ( sin dropdown ) --}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/users/signin">Sign in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/signup">Sign up</a>
+            </li>
+            {{/if}}
+            </ul>
+        </div>    
+    </div>
+</nav>
+<!-- End Navbar -->

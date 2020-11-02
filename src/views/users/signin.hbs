@@ -1,0 +1,25 @@
+{{!-- Estructura para el Signin form  --}}
+<div class="row"> {{!-- El form estara en una tarjeta de 4 columnas y centrado--}}
+    <div class="col-md-4 mx-auto mt-4">
+        <div class="card mx-auto">{{!-- Estara encerrado en una card --}}
+            <div class="card-header mx-auto">{{!-- Cabecera de card (titulo) --}}
+                <h2>Account Login</h2>
+            </div>
+            {{!-- Imagen/logo en la cabecera del form --}}
+            <img src="/img/img1.png" class="rounded-circle mx-auto d-block m-4 logo" alt="Logo">
+            <div class="card-body">{{!-- Cuerpo/contenido de card --}}
+                <form action="/users/signin" method="POST"> {{!-- a través de método POST, envia a esa ruta los datos --}}
+                    <div class="form-group"> {{!-- div para separar cada input (Bootstrap) --}}
+                        <input type="email" name="email" class="form-control" placeholder="email" value="{{email}}">
+                    </div>
+                    <div class="form-group"> {{!-- div para separar cada input (Bootstrap) --}}
+                        <input type="password" name="password" class="form-control" placeholder="password" value="{{password}}">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Log in </button> {{!-- Al dar submit los datos se registran en el modelo de la base de datos user --}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

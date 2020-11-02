@@ -1,0 +1,59 @@
+{{!-- Estructura HTML pie de pagina que se llama desde el archivo main ( contiene validación para los usuarios registrados y no registrados ) --}}
+<!-- Footer -->
+<footer class="page-footer font-small unique-color-dark pt-4">
+    <!-- Footer Elements -->
+    <div class="container">
+    {{!-- Si existe un user ( usuario registrado ), muestra esta estructura como footer --}}
+    {{#if user}}
+        <!-- Call to action -->
+        <ul class="list-unstyled list-inline text-center py-2">
+        <li class="list-inline-item">
+            <h5 class="mb-1">Welcome to My notes App!</h5>
+        </li>
+        <li class="list-inline-item">
+            <a href="/notes" class="btn btn-outline-white btn-rounded">Look a view to your notes</a>
+         </li>
+        </ul>
+        <!-- Call to action -->
+    </div>
+    {{!-- Pero, si entra a la ruta de registrarse, cambia el footer --}}
+    {{else if footertrue}} {{!-- footertrue es una variable ( boolean ) que por defecto esta en true si entramos a la pagina Sign  up (router.get) --}}
+    <!-- Footer Elements -->
+
+    <!-- Call to action -->
+    <ul class="list-unstyled list-inline text-center py-2">
+      <li class="list-inline-item">
+        <h5 class="mb-1">Log in your account</h5>
+      </li>
+      <li class="list-inline-item">
+        <a href="/users/signup" class="btn btn-outline-white btn-rounded">Sign in!</a>
+      </li>
+    </ul>
+    <!-- Call to action -->
+  </div>
+  <!-- Footer Elements -->
+
+    <!-- Footer Elements -->
+    {{else}} {{!-- Si esta en cualquier otra ruta, muestra esta estructura del footer --}}
+    <!-- Call to action -->
+    <ul class="list-unstyled list-inline text-center py-2">
+      <li class="list-inline-item">
+        <h5 class="mb-1">Register for free</h5>
+      </li>
+      <li class="list-inline-item">
+        <a href="/users/signup" class="btn btn-outline-white btn-rounded">Sign up!</a>
+      </li>
+    </ul>
+    <!-- Call to action -->
+  </div>
+  <!-- Footer Elements -->
+    {{/if}}
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- End Footer -->

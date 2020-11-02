@@ -1,0 +1,27 @@
+Express: Framework de Node, Permite el uso de server de manera sencilla
+express-handlebars: Integran un motor de plantilla dentro de express
+express-session: Crear sesiones dentro del servidor
+method-override: Extender funcionalidad de los formularios (Enviar put/delete como method)
+mongoose: modulo para unir express con una base de datos (permite conectarse con mongoDB)
+passport: Autenticar ademas de solo guardar datos (Autentificar usuario)
+passport-local: Autentificar usuario
+bcryptjs: Convertidor de Hash
+connect-flash: Enviar mensajes entre multiples vistas
+---
+src (Vistas del frontend y servidor )
+ views (Todas las vistas del proyecto (uso de Handlebar/template engine)
+ views>layouts (Plantilla principal donde se intertara cada vista)
+ views>notes (vista para todas las notas, editar nota y crear una nota)
+ views>partials(Porciones de código para ocuparlos como plantillas para solo ALGUNAS vistas y mensajes de error o exito)
+ views>user(Vistas para form signin-signup)
+ database.js(configuración base de datos (mongoDB-mongoose))
+ index.js (configuración principal)
+ routes (Crear las rutas URL del servidor (login,register,notes)
+ public (Archivos estaticos (fuentes, imágenes, css, JS)
+ models (Definir los modelos de datos de la base de datos)
+ helpers (Funciones que el server puede usar)
+ config (Configuraciones, configuración de ciertos modulos)
+ .env(USERNAME=*****
+    PASSWORD=**************
+    DBNAME=***************)
+                                           

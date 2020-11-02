@@ -1,0 +1,18 @@
+{{!-- Mensajes de error  --}}
+{{#if error}} {{!-- Si existe una variable global llamada error, passport mostrara un error --}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error }} 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/if}}
+{{!-- Se pueden mostrar multiples errores al mismo tiempo --}}
+{{#each errors}} {{!-- Especie de forEach, Por cada errors(array de errores), inserta esta alerta:  --}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ text }} 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}

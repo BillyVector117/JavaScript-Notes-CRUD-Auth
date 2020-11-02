@@ -1,0 +1,29 @@
+{{!-- Estructura que se crea por cada elemento recorrido de la DB --}}
+<div class="row">
+    {{#each notes}} {{!-- Por cada elemento de notes ( arreglo, consulta de la Db ) realiza esta estructura de tarjetas ( notes es el resultado del query a la base de datos --}}
+        <div class="col-md-3 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-between align-items-center"> {{!-- Alinear los iconos a la derecha --}}
+                        {{!-- href envia los datos a dicha URL, el '_id' es una propiedad creada por mongoDB --}}
+                        {{title}} <a href="/notes/edit/{{_id}}"><i class="fas fa-edit"></i></a> {{!-- Propiedad del objeto/documento capturado de la DB --}}
+                    </h4>
+                    <p>{{description}}</p> {{!-- Propiedad del objeto/documento capturado de la DB --}}
+                    <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST"> {{!-- Enviar los datos para eliminar (DELETE a esa URL) --}}
+                        <input type="hidden" name="_method" value="DELETE"> {{!-- Input oculto que envia una petición delete --}}
+                    <button class="btn btn-danger btn-block btn-sm" type="submit"> Delete </button> {{!-- Botón para eliminar una nota, al dar submit ejecuta el formulario (DELETE, a través del método override templaza el POST por DELETE) --}}
+                </form>
+                </div>
+            </div>
+        </div>
+        {{else}} {{!-- De no existir alguna nota para mostrar en la base de datos entonces...--}}
+        <div class="card mx-auto mt-4"> {{!-- Crea una tarjeta con un contenido:  --}}
+            <div class="card-body">
+                <h1>Hello {{ user.name }} ! </h1> {{!-- user.name es una variable global ( res.locals.user )--}}
+                <p class="lead"> There are not notes yet!</p>
+                <a href="/notes/add" class="btn btn-success btn-block">Create a new Note!</a>
+            </div>
+        </div>
+    {{/each}}
+</div>
+

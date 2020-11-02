@@ -1,0 +1,25 @@
+{{!-- Vista para formulario de EDITAR una nota --}}
+<div class="col-md-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit Note</h3>
+        </div>
+        <div class="card-body">
+            {{!-- enviar los datos editados del formulario (POST)  --}}
+            <form action="/notes/edit-note/{{note._id}}?_method=PUT" method="POST">
+            <input type="hidden" name="_method" value="PUT"> {{!-- input oculto que envia una petición put--}}
+                <div class="form-group">
+                    {{!-- Input que contendra el titulo de la nota (por la consulta a la DB se queda el valor al entrar a la vista (note.title)) --}}
+                    <input type="text" name="title" class="form-control" placeholder="Title" value="{{note.title}}">
+                </div>
+                <div class="form-group">
+                    {{!-- Contiene la descripción de la nota justo al entrar a la vista (son datos capturados de la DB (note.description)) --}}
+                    <textarea name="description" class="form-control" >{{note.description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit"> Save changes </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
