@@ -1,5 +1,5 @@
-# javascript-notes #JavaScript #Passport #NodeJS #MongoDB #Mongoose #Bootstrap4 #Flash #method-override #encrypt #ES6
-JavaScript CRUD Notes (NodeJS,MongoDB,Flash,JavaScript, ES6)
+# javascript-notes #JavaScript #Passport #NodeJS #MongoDB #Mongoose #Bootstrap4 #Flash #method-override #encrypt #ES6 #Authentication
+JavaScript CRUD Notes (NodeJS,MongoDB,Flash,JavaScript, Passport, ES6)
 -> https://notes-application-javascript.herokuapp.com/ AVAILABLE DEMO PAGE !
 
 -> Index page
