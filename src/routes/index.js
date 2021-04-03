@@ -1,11 +1,10 @@
-const router = require('express').Router() // Requerir express y su modulo router para crear rutas
+const router = require('express').Router() // Require Express to create a server and its Router methods
 
-// Enrutador que crea la ruta para el index
 router.get('/', (req, res) => {
-    res.render('index') // Renderizamos como respuesta el archivo index (.hbs) del directorio views
+    res.render('index') // Render index.hbs as server response
 })
-// Creación ruta /about
+// Url:  /about
 router.get('/about', (req, res) => {
-    res.render('about') // Renderizamos como respuesta el archivo about (.hbs) del directorio views
+    res.render('about')
 })
 module.exports = router

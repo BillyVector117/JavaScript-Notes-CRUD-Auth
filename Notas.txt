@@ -21,7 +21,8 @@ src (Vistas del frontend y servidor )
  models (Definir los modelos de datos de la base de datos)
  helpers (Funciones que el server puede usar)
  config (Configuraciones, configuración de ciertos modulos)
+ // .env File contains: 
  .env(USERNAME=*****
     PASSWORD=**************
-    DBNAME=***************)
+    DBNAME=***************
                                            

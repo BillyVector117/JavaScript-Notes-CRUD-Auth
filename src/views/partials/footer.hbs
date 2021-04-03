@@ -1,9 +1,10 @@
-{{!-- Estructura HTML pie de pagina que se llama desde el archivo main ( contiene validación para los usuarios registrados y no registrados ) --}}
+{{!-- This module is used in main File ( Contains validation to
+registered/unregistered users ) --}}
 <!-- Footer -->
 <footer class="page-footer font-small unique-color-dark pt-4">
     <!-- Footer Elements -->
     <div class="container">
-    {{!-- Si existe un user ( usuario registrado ), muestra esta estructura como footer --}}
+    {{!-- If exist a current user (Logged) store this footer --}}
     {{#if user}}
         <!-- Call to action -->
         <ul class="list-unstyled list-inline text-center py-2">
@@ -16,10 +17,9 @@
         </ul>
         <!-- Call to action -->
     </div>
-    {{!-- Pero, si entra a la ruta de registrarse, cambia el footer --}}
-    {{else if footertrue}} {{!-- footertrue es una variable ( boolean ) que por defecto esta en true si entramos a la pagina Sign  up (router.get) --}}
+    {{!-- But, if user is signing up (Unregister) store this footer --}}
+    {{else if footertrue}}
     <!-- Footer Elements -->
-
     <!-- Call to action -->
     <ul class="list-unstyled list-inline text-center py-2">
       <li class="list-inline-item">
@@ -34,7 +34,7 @@
   <!-- Footer Elements -->
 
     <!-- Footer Elements -->
-    {{else}} {{!-- Si esta en cualquier otra ruta, muestra esta estructura del footer --}}
+    {{else}} {{!-- If user is in another route, store this footer (user is unregister) --}}
     <!-- Call to action -->
     <ul class="list-unstyled list-inline text-center py-2">
       <li class="list-inline-item">
@@ -51,7 +51,7 @@
 
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    <a href="https://github.com/BillyVector117"> Billy Rodríguez M. - Github</a>
   </div>
   <!-- Copyright -->
 

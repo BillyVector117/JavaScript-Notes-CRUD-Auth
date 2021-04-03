@@ -1,18 +1,19 @@
-{{!-- Mensajes para usar entre cualquier vista (se manda a llamar como sucess_msg o error_msg por que son variables globales ( dentro del index.js )) --}}
+{{!-- This messages will use in any view (It will call like 'sucess_msg' or
+'error_msg' because are gloabl variables ( used in index.js )) --}}
 
-{{!-- Alerta exitosa muestra esta estructura de alerta --}}
+{{!-- Success alert: --}}
 {{#if success_msg}}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ success_msg }}  {{!-- Mensaje de flash --}}
+  {{ success_msg }} {{!-- Flash message (Customized) --}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 {{/if}}
-{{!-- Alerta fallo muestra esta estructura de alerta --}}
+{{!-- Failure alert: --}}
 {{#if error_msg}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ error_msg }}  {{!-- Mensaje de flash --}}
+  {{ error_msg }} {{!-- Flash message (Customized) --}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

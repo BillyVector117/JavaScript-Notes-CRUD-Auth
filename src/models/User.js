@@ -1,25 +1,28 @@
-// Definir estructura de modelo de datos
-const mongoose = require('mongoose') // Requerir mongoose para generar esquema de datos
-const { Schema } = mongoose // Requerir la clase esquema de datos de moongose
-const bcryptjs = require('bcryptjs') // Requerir modulo para encriptar contraseñas
-// Clase que define la estructura de las users (propiedades, valor)
-const UserSchema = new Schema ({
-    name: { type: String, required: true }, // Nombre requerido
-    email: { type: String, required: true }, // email requerido
-    password: { type: String, required: true }, // password requerido
-    date: { type: Date, default: Date.now } // Si no digitamos una fecha nos devolvera la actual de creación
-})
+// Notes Schema/Model type
+const mongoose = require("mongoose"); // Allows to generate Schemas
+const { Schema } = mongoose; // To use Schema methods
+const bcryptjs = require("bcryptjs"); // Allows to Encrypt/Hash passwords
 
-// Encriptar contraseña con bcryptsjs (.methods.encryptPassword es de bcryptjs)
-UserSchema.methods.encryptPassword = async (password) => { // Al modelo de datos usamos su metodo encryptar password, le pasamos el password (usuario lo tipea)
-    const salt = await bcryptjs.genSalt(10); // Realiza el algoritmo de Hash 10 veces
-    const hash = bcryptjs.hash(password, salt) // Obtener hash (contraseña cifrada, hara el algoritmo con la contraseña antigua y el hash creadó)
-    return hash // Retorna el hash
-}
-// Comparar lo cifrado con el password de la base de datos
-UserSchema.methods.matchPassword = async function (password) { // Usamos 'function' para que el scope no se pierda, le pasamos la contraseña cifrada
-    return await bcryptjs.compare(password, this.password) // Retornamos la comparación del password cifrado (password) con el de la base de datos (this.password)
-}
+// Set properties to Note Schema
+const UserSchema = new Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+});
 
-// Exportar modulo del modelo de datos de mongoose
-module.exports = mongoose.model('User', UserSchema) // Exportar userSchema como User
+// Use bcryptsjs to encrypt password (.methods.encryptPassword is part of bcryptjs's method)
+UserSchema.methods.encryptPassword = async (password) => {
+  // using typed passwrod by user
+  const salt = await bcryptjs.genSalt(10); // Hash 10 times
+  const hash = bcryptjs.hash(password, salt); // Get hash
+  return hash;
+};
+// Validate typed password by user matches with Hash in database
+UserSchema.methods.matchPassword = async function (password) {
+  // Declarative function to avoid lost scope
+  return await bcryptjs.compare(password, this.password); // Compares recently typed password (password) with database hashed password (this.password)
+};
+
+// Export Schema/Model as 'User'
+module.exports = mongoose.model("User", UserSchema);

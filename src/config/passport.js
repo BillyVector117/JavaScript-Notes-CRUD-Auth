@@ -1,35 +1,46 @@
-const passport = require('passport') // Modulo para guardar sesiones de usuarios ( autenticarlos )
-const LocalStrategy = require('passport-local').Strategy // Modulo para autenticarlos de manera local
-const User = require('../models/User') // Requerir modulo de modelo de datos
+const passport = require("passport"); // To authenticate users
+const LocalStrategy = require("passport-local").Strategy; // Authenticate locally
+const User = require("../models/User"); // users Schema/Model
 
-// passport.use() Define una nueva estrategia de autenticación ( Tiene como nombre de authenticate ( 'local' ) )
-passport.use(new LocalStrategy({
-    // Indicamos a través de que se autenticara el usuario
-    usernameField: 'email'
-}, async (email, password, done) => { // Valores para definir la autenticación
-    const user = await User.findOne({email: email}) // Query, captura el correo con el correo pasado por parametro
-    // Validar que existe ese correo en la base de datos
-    if (!user) { // Si no existe...
-        return done(null, false, { message: 'User not found :(' }) // Termina la ejecución/ proceso de autenticación con un mensaje de no usuario
-    } else { // Si el correo EXISTE, ahora validara la contraseña
-        const match = await user.matchPassword(password) // Se ejecuta el método match para comparar las contraseñas (hash, con la que el usuario acaba de tipear)
-        if (match) { // Si la contraseña que el usuario a digitado coincide con el hash mas el correo encontrado...
-            return done(null, user) // entonces devuelve el usuario
+// passport.use() Define a new strategy to authenticate (named: ( 'local' ) )
+passport.use(
+  new LocalStrategy(
+    {
+      // Set how users will authenticate (E-mail)
+      usernameField: "email",
+    },
+    // Values to define authenication
+    async (email, password, done) => {
+      const user = await User.findOne({ email: email }); // Query, capture typed/set Email and Password that matches in Database
+      // Validate that user exists in Database
+      if (!user) {
+        // Fail case
+        return done(null, false, { message: "User not found :(" });
+      } else {
+        // Success case, then validate password
+        const match = await user.matchPassword(password); // Execute matchPassword() method to compare the real password with the recently typed (hash in database vs typed by user)
+        if (match) {
+          // Password matches case:
+          return done(null, user); // Return user
         } else {
-            return done(null, false, {message: ' Incorrect Password'})
+          return done(null, false, { message: " Incorrect Password" });
         }
+      }
     }
-}))
+  )
+);
 
-// Almacenar en una sesión el id del usuario
-passport.serializeUser((user, done) => { // Toma un usuario y CB
-    done(null, user.id) // Ejecuta el callback con un error null (No hay errores) y el id del usuario
-})
+// Save ID user in a session
+passport.serializeUser((user, done) => {
+  // First param to set No-error, second param User's ID
+  done(null, user.id);
+});
 
 // Almacenar en una sesión al usuario mediante el id generamos al usuario
-passport.deserializeUser((id, done) => { // Si hay un usuario en la sesion
-    User.findById(id,  (err, user) => { // Buscara por id a ese usuario, puede haber un error o encontrarlo
-    done(err, user) // Si no hay error devuelve el user
-    })
-})
-
+passport.deserializeUser((id, done) => {
+  // If a user exists...
+  User.findById(id, (err, user) => {
+    // Buscara por id a ese usuario, puede haber un error o encontrarlo
+    done(err, user); // Si no hay error devuelve el user
+  });
+});

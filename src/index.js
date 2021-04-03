@@ -1,73 +1,77 @@
-// MODULO PRINCIPAL PARA ARRANCAR LA APLICACIÓN
-const express = require('express') // Requerir express
-const path = require('path') // Hacer uso de paths
-const exphbs = require('express-handlebars') // Requerir modulo de template engines
-const methodOverride = require('method-override') // Requiere modulo para que los formularios envien datos con otros métodos
-const session = require('express-session') // Guardar las sesiones de los usuarios
-const flash = require('connect-flash') // Enviar mensajes entre multiples vistas (middleware)
-const passport = require('passport') // Modulo para autenticar usuarios
-const handlebars =  require('handlebars');
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access'); // Evita error para capturar propiedades del usuario
+// Main module to Config and run application
+const express = require('express') // To create a server
+const path = require('path') // Allow to use paths/directory
+const handlebars =  require('handlebars'); // Template-Engine
+const exphbs = require('express-handlebars') // Handlebars as Template-Engine with Express
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access'); // Required by Handlebars
+const methodOverride = require('method-override') // To send Put/Update methods though Submit Data-Forms
+const session = require('express-session') // Save User's session
+const flash = require('connect-flash') // Send messages between views (Middleware)
+const passport = require('passport') // User authentications
 
-//INITIALIZATION EXPRESS (configuración para inicializar base de datos, passport)
-const app = express() // Usar el método express() de express
-require('./database') // Requerir archivo database
-require('./config/passport')
+//INITIALIZATION EXPRESS (Database and Passport config)
+const app = express() // Allow to use all Express() methods
+require('./database') // Database connection
+require('./config/passport') // Passport config
 
-// SETTINGS (Configurar template engines, vistas)
-const port = process.env.PORT || 3000 // Usa puerto de la nube, si no, 3000 por defecto
+// SETTINGS (Views, Template-Engines config, ports and static files)
+const port = process.env.PORT || 3000
 
-app.set('views', path.join(__dirname, 'views')) // Indica a Node donde se encuentra el directorio views (Contiene archivos de handlebars y estaticos)
+// Set static Files path
+app.set('views', path.join(__dirname, 'views'))
 
-// Configuración objeto de template engine (Handlebars)
-app.engine('.hbs', exphbs({ // El nombre de los archivos seran .hbs, usando exphbs (handlebars como template engine)
-    // Configuración básica Handlebars
-    defaultLayout: 'main', // Archivo principal
-    layoutsDir: path.join(app.get('views'), 'layouts'), // Directorio de archivo main (layout)
-    partialsDir: path.join(app.get('views'), 'partials'), // Directorio de archivo para Pequeñas vistas/porciones HTML que se repetiran en otras vistas (footer, mensajes, nav)
-    extname: '.hbs', // Indicar extensión final de los archivos
-    handlebars: allowInsecurePrototypeAccess(handlebars) // Evita error por consola de handlebars
+// Template-Engine Object Config (Handlebars)
+app.engine('.hbs', exphbs({
+    // Necessary config
+    defaultLayout: 'main', // Main file
+    layoutsDir: path.join(app.get('views'), 'layouts'), // Main File path (layout)
+    partialsDir: path.join(app.get('views'), 'partials'), // Partials (footer, mensajes, nav)
+    extname: '.hbs', // Extension file
+    handlebars: allowInsecurePrototypeAccess(handlebars) // To avoid error Logs
 }))
-app.set('view engine', '.hbs') // Indicar el template engine a usar (.hbs)
+// Setting Handlebars as Template-Engine
+app.set('view engine', '.hbs')
 
 // MIDDLEWARES
-// metodo para recibir datos de un formulario de manera correcta (sin imágenes, etc)
+// To send correctly data info from Inputs-value (No support images)
 app.use(express.urlencoded({extended: false}));
-app.use(methodOverride('_method')); // Poder hacer peticiones PUT en los formularios
-app.use(session({ // Configuración tipo objeto de session(creador de sesiones para cada usuario)
-  secret: 'secretApp', // Palabra secreta
+app.use(methodOverride('_method')); // Allows to use PUT/UPDATE/DELETE methods in Submit-forms
+// Object config to use 'session' (Express-module) to create user's session
+app.use(session({
+  secret: 'secretApp', // Secret word
   resave: true,
   saveUninitialized: true
 }));
-app.use(passport.initialize()) // Inicializa passport
-app.use(passport.session()) // passport usara la sesión de express
-app.use(flash()) // Modulo para enviar mensajes entre multiples vistas
+app.use(passport.initialize()) // Init passport
+app.use(passport.session()) // Passport will use session from 'Express-session' mixed
+app.use(flash()) // To send messages in multiple views
 
 // GLOBAL VARIABLES
 
-// Los mensajes guardados en partials se podran mostrar en cualquier vista 
+// Messages saved in /partials will store in any view
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg') // Crear variable (sucess_msg) que almacena los mensajes enviados por flash llamados success_msg y error_msg
-  res.locals.error_msg = req.flash('error_msg') // Crear variable (error_msg) que almacena los mensajes enviados por flash llamados success_msg y error_msg
-  res.locals.error = req.flash('error') // Crear variable (error) que almacena los mensajes enviados por flash llamados success y error
-  res.locals.user = req.user || null // Para poder usarlo como 'saludo' cuando un usuario se logee
-  next() // Indicar que siga con los siguientes middlewares
+  // Create flash messages setting a nickname to each message
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.error_msg = req.flash('error_msg')
+  res.locals.error = req.flash('error')
+  res.locals.user = req.user || null // To use as 'greeting' when a user is logged
+  next() // Continue with next middlewares
 
 })
 
-// ROUTES (Utiliza las rutas del directorio routes)
-// Decirle a express dónde se encuentran las rutas
+// ROUTES
+// Set routes path
 app.use(require('./routes/index'))
 app.use(require('./routes/notes'))
 app.use(require('./routes/users'))
 
 
 
-// STATIC FILES (Configura los archivos estaticos, directorio public)
+// STATIC FILES (static files config ('public' directoy))
 app.use(express.static(path.join((__dirname), 'public'))) // Indicar el directorio public (css, js, img)
 
 
-// SERVER LISTENING
+// SERVER LISTENER
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`)
   })
