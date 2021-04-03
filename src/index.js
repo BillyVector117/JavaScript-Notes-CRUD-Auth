@@ -10,6 +10,7 @@ const methodOverride = require("method-override"); // To send Put/Update methods
 const session = require("express-session"); // Save User's session
 const flash = require("connect-flash"); // Send messages between views (Middleware)
 const passport = require("passport"); // User authentications
+require("dotenv").config(); // To load enviroment variables
 
 //INITIALIZATION EXPRESS (Database and Passport config)
 const app = express(); // Allow to use all Express() methods
@@ -74,7 +75,7 @@ app.use(require("./routes/users"));
 // STATIC FILES (static files config ('public' directoy))
 app.use(express.static(path.join(__dirname, "public"))); // Indicar el directorio public (css, js, img)
 
-// SERVER LISTENER
+// Server listener
 app.listen(port, () => {
-  console.log(`app listening at http://localhost:${port}`);
+  console.log(`server listening on port ${port} !`);
 });
